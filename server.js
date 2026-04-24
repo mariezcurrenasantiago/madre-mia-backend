@@ -10,17 +10,17 @@ dotenv.config();
 
 const app = express();
 
-// conectar base de datos
+
 conectarDB();
 
-// middlewares
+
 app.use(cors());
 app.use(express.json());
 
-// rutas
+
 app.use("/api/productos", productoRoutes);
 
-// middleware de errores
+
 app.use(errorHandler);
 
 app.get("/", (req, res) => {
