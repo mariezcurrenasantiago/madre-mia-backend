@@ -1,6 +1,6 @@
 import Producto from "../models/Producto.js";
 
-// UPDATE
+
 export const actualizarProducto = async (req, res) => {
   try {
     const actualizado = await Producto.findByIdAndUpdate(
@@ -19,7 +19,7 @@ export const actualizarProducto = async (req, res) => {
   }
 };
 
-// DELETE
+
 export const eliminarProducto = async (req, res) => {
   try {
     const eliminado = await Producto.findByIdAndDelete(req.params.id);
