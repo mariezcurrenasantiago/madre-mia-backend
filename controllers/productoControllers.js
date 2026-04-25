@@ -1,24 +1,6 @@
 import Producto from "../models/Producto.js";
 
-export const crearProducto = async (req, res) => {
-  try {
-    const nuevo = new Producto(req.body);
-    const guardado = await nuevo.save();
-    res.json(guardado);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-export const obtenerProductos = async (req, res) => {
-  try {
-    const productos = await Producto.find();
-    res.json(productos);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
+// UPDATE
 export const actualizarProducto = async (req, res) => {
   try {
     const actualizado = await Producto.findByIdAndUpdate(
@@ -26,16 +8,27 @@ export const actualizarProducto = async (req, res) => {
       req.body,
       { new: true }
     );
+
+    if (!actualizado) {
+      return res.status(404).json({ mensaje: "Producto no encontrado" });
+    }
+
     res.json(actualizado);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
+// DELETE
 export const eliminarProducto = async (req, res) => {
   try {
-    await Producto.findByIdAndDelete(req.params.id);
-    res.json({ mensaje: "Producto eliminado" });
+    const eliminado = await Producto.findByIdAndDelete(req.params.id);
+
+    if (!eliminado) {
+      return res.status(404).json({ mensaje: "Producto no encontrado" });
+    }
+
+    res.json({ mensaje: "Producto eliminado correctamente" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
